@@ -3,7 +3,8 @@
 	"repository": "freezingwind/battleofmages.com",
 	"version": "0.0.1",
 	"dependencies": {
-		"aero": "*"
+		"aero": "*",
+		"mysql": "*"
 	},
 	"author": {
 		"name": "Eduard Urbach",
