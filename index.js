@@ -7,6 +7,6 @@ aero.app.param("ip", function(request, response, next, ip) {
 	next();
 });
 
-aero.app.get("/country/:ip", function(request, response) {
+aero.app.get("/api/country/:ip", function(request, response) {
 	response.end(request.country);
 });
