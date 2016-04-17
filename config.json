@@ -2,7 +2,8 @@
 	"domain": "battleofmages.com",
 	"title": "Battle of Mages",
 	"static": [
-		"images"
+		"images",
+		"textures"
 	],
 	"fonts": [
 		"Poiret One",
