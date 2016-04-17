@@ -31,6 +31,8 @@ var cursor3d = new THREE.Vector3()
 var mouseDown = false
 var projectVector = new THREE.Vector3()
 
+var activeMenuElement = null
+
 /*document.onmousedown = function() {
 	mouseDown = true
 }
@@ -58,6 +60,13 @@ document.onmousemove = function(e) {
 
 function repositionCursor() {
 	let element = document.querySelector('.active')
+
+	if(element !== activeMenuElement) {
+		spawnerOptions.spawnRate = 20000
+		activeMenuElement = element
+	} else {
+		spawnerOptions.spawnRate = 500
+	}
 
 	cursor.x = element.offsetLeft + element.offsetWidth / 2
     cursor.y = element.offsetTop + element.offsetHeight / 2
