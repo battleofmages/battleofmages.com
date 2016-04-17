@@ -1,0 +1,20 @@
+{
+	"menu": {
+		"Play": {
+			"url": "/",
+			"icon": "gamepad"
+		},
+		"Ranking": {
+			"url": "/ranking",
+			"icon": "globe"
+		},
+		"Forum": {
+			"url": "/forum",
+			"icon": "comments"
+		},
+		"Classes": {
+			"url": "/classes",
+			"icon": "group"
+		}
+	}
+}

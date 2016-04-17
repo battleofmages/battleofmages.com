@@ -1,7 +1,11 @@
 {
-	"siteName": "battleofmages.com",
-	"pages": [
-		"home"
+	"domain": "battleofmages.com",
+	"title": "Battle of Mages",
+	"static": [
+		"images"
 	],
-	"port": 3010
+	"fonts": [
+		"Poiret One",
+		"Poiret One:bold"
+	]
 }

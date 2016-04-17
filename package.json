@@ -1,14 +1,16 @@
 {
 	"name": "battleofmages.com",
-	"repository": "freezingwind/battleofmages.com",
+	"repository": "battleofmages/battleofmages.com",
 	"version": "0.0.1",
 	"dependencies": {
 		"aero": "*",
-		"mysql": "*"
+		"aero-ajax": "*",
+		"aero-reset": "*",
+		"aero-font-awesome": "*"
 	},
 	"author": {
 		"name": "Eduard Urbach",
 		"email": "e.urbach@gmail.com",
-		"url": "http://blitzprog.org"
+		"url": "https://blitzprog.org"
 	}
 }

@@ -1,0 +1,10 @@
+.appear
+	transform translateZ(0)
+	animation-name appear
+	animation-duration 1s
+
+@keyframes appear
+	from
+		filter opacity(0) saturate(0) blur(20px)
+	to
+		filter opacity(1) saturate(1) blur(0px)
