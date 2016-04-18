@@ -23,12 +23,9 @@
 
 pulsateRadius = 16px
 @keyframes pulsate
-	0%
-		transform scale(1.05)
-		text-shadow 0 0 pulsateRadius rgba(255, 255, 255, 0.9)
+	0%, 100%
+		transform scale(1.0)
+		text-shadow 0 0 pulsateRadius rgba(255, 255, 255, 0.0)
 	50%
-		transform scale(1)
-		text-shadow 0 0 pulsateRadius rgba(255, 255, 255, 0)
-	100%
 		transform scale(1.05)
 		text-shadow 0 0 pulsateRadius rgba(255, 255, 255, 0.9)

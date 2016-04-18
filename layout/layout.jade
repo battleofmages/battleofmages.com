@@ -12,7 +12,7 @@ html(lang='en')
 			#navigation-container
 				nav#navigation
 					each item, name in menu
-						a.navigation-item.ajax(href=item.url)
+						a.navigation-item.ajax(href=item.url, data-idle=parseInt(item.color.idle, 16), data-explode=parseInt(item.color.explode, 16))
 							i.navigation-item-icon.fa.fa-fw(class='fa-' + item.icon)
 		
 		#content-container

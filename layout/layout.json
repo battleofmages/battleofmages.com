@@ -2,19 +2,35 @@
 	"menu": {
 		"Play": {
 			"url": "/",
-			"icon": "gamepad"
+			"icon": "gamepad",
+			"color": {
+				"idle": "80ff80",
+				"explode": "30ff80"
+			}
 		},
 		"Ranking": {
 			"url": "/ranking",
-			"icon": "globe"
+			"icon": "globe",
+			"color": {
+				"idle": "8433663",
+				"explode": "3186687"
+			}
 		},
 		"Forum": {
 			"url": "/forum",
-			"icon": "comments"
+			"icon": "comments",
+			"color": {
+				"idle": "aa88ff",
+				"explode": "aa38ff"
+			}
 		},
-		"Classes": {
-			"url": "/classes",
-			"icon": "group"
+		"Media": {
+			"url": "/media",
+			"icon": "television",
+			"color": {
+				"idle": "80afff",
+				"explode": "309fff"
+			}
 		}
 	}
 }

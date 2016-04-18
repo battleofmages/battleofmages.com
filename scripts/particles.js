@@ -1,3 +1,5 @@
+const radiusPx = 70
+
 var container = $('render')
 var camera = new THREE.PerspectiveCamera(28, window.innerWidth / window.innerHeight, 1, 10000)
 var scene = new THREE.Scene()
@@ -31,7 +33,7 @@ var cursor3d = new THREE.Vector3()
 var spawnPosition = new THREE.Vector3()
 var mouseDown = false
 var projectVector = new THREE.Vector3()
-
+var radius = 0.0
 var activeMenuElement = null
 
 /*document.onmousedown = function() {
@@ -62,19 +64,29 @@ document.onmousemove = function(e) {
 function repositionCursor() {
 	let element = document.querySelector('.active')
 
+	if(element === null)
+		return
+
 	if(element !== activeMenuElement) {
 		spawnerOptions.spawnRate = 20000
+		options.color = element.dataset.explode
 		activeMenuElement = element
 	} else {
 		spawnerOptions.spawnRate = 500
+		options.color = element.dataset.idle
 	}
 
 	cursor.x = element.offsetLeft + element.offsetWidth / 2
     cursor.y = element.offsetTop + element.offsetHeight / 2
 
+	cursor3d = screenToWorld(cursor.x, cursor.y)
+	radius = cursor3d.x - screenToWorld(cursor.x + radiusPx, cursor.y).x
+}
+
+function screenToWorld(x, y) {
 	projectVector.set(
-		(cursor.x / window.innerWidth) * 2 - 1,
-	    -(cursor.y / window.innerHeight) * 2 + 1,
+		(x / window.innerWidth) * 2 - 1,
+	    -(y / window.innerHeight) * 2 + 1,
 	    0.5
 	)
 
@@ -82,7 +94,7 @@ function repositionCursor() {
 
 	let dir = projectVector.sub(camera.position).normalize()
 	let distance = - camera.position.z / dir.z
-	cursor3d = camera.position.clone().add(dir.multiplyScalar(distance))
+	return camera.position.clone().add(dir.multiplyScalar(distance))
 }
 
 function init() {
@@ -112,8 +124,8 @@ function animate() {
 	let delta = clock.getDelta() * spawnerOptions.timeScale
 	tick += delta
 
-	//spawnPosition.lerp(cursor3d, delta * 8)
-	spawnPosition = cursor3d
+	spawnPosition.lerp(cursor3d, delta * 8)
+	//spawnPosition = cursor3d
 
 	if(tick < 0)
 		tick = 0
@@ -122,8 +134,8 @@ function animate() {
 		for(let x = 0; x < spawnerOptions.spawnRate * delta; x++) {
 			for(let degree = 0; degree < 360; degree++) {
 				options.position = spawnPosition.clone()
-				options.position.x += Math.cos(degree) * 3.5
-				options.position.y += Math.sin(degree) * 3.5
+				options.position.x += Math.cos(degree) * radius
+				options.position.y += Math.sin(degree) * radius
 				// options.velocity.x = Math.cos(degree)
 				// options.velocity.y = Math.sin(degree)
 				particleSystem.spawnParticle(options)
