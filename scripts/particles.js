@@ -28,6 +28,7 @@ var spawnerOptions = {
 
 var cursor = new THREE.Vector2()
 var cursor3d = new THREE.Vector3()
+var spawnPosition = new THREE.Vector3()
 var mouseDown = false
 var projectVector = new THREE.Vector3()
 
@@ -111,13 +112,16 @@ function animate() {
 	let delta = clock.getDelta() * spawnerOptions.timeScale
 	tick += delta
 
+	//spawnPosition.lerp(cursor3d, delta * 8)
+	spawnPosition = cursor3d
+
 	if(tick < 0)
 		tick = 0
 
 	if(delta > 0) {
 		for(let x = 0; x < spawnerOptions.spawnRate * delta; x++) {
 			for(let degree = 0; degree < 360; degree++) {
-				options.position = cursor3d.clone()
+				options.position = spawnPosition.clone()
 				options.position.x += Math.cos(degree) * 3.5
 				options.position.y += Math.sin(degree) * 3.5
 				// options.velocity.x = Math.cos(degree)
