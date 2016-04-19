@@ -16,7 +16,7 @@ var options = {
 	positionRandomness: 0.3,
 	velocity: new THREE.Vector3(),
 	velocityRandomness: 1,
-	color: 0x80ff80, //0xaa88ff,
+	color: 0xffffff,
 	colorRandomness: 0.2,
 	turbulence: 0.5,
 	lifetime: 2,
@@ -24,7 +24,7 @@ var options = {
 	sizeRandomness: 1
 }
 var spawnerOptions = {
-	spawnRate: 500,
+	spawnRate: 0,
 	timeScale: 1
 }
 
@@ -34,53 +34,18 @@ var spawnPosition = new THREE.Vector3()
 var mouseDown = false
 var projectVector = new THREE.Vector3()
 var radius = 0.0
-var activeMenuElement = null
-
-/*document.onmousedown = function() {
-	mouseDown = true
-}
-
-document.onmouseup = function() {
-	mouseDown = false
-}
-
-document.onmousemove = function(e) {
-    cursor.x = e.clientX
-    cursor.y = e.clientY
-
-	projectVector.set(
-		(cursor.x / window.innerWidth) * 2 - 1,
-	    -(cursor.y / window.innerHeight) * 2 + 1,
-	    0.5
-	)
-
-	projectVector.unproject(camera)
-
-	let dir = projectVector.sub(camera.position).normalize()
-	let distance = - camera.position.z / dir.z
-	cursor3d = camera.position.clone().add(dir.multiplyScalar(distance))
-}*/
+var activeElement = null
+var oldActiveElement = null
+var windowLoaded = false
 
 function repositionCursor() {
-	let element = document.querySelector('.active')
-
-	if(element === null)
-		return
-
-	if(element !== activeMenuElement) {
-		spawnerOptions.spawnRate = 20000
-		options.color = element.dataset.explode
-		activeMenuElement = element
-	} else {
-		spawnerOptions.spawnRate = 500
-		options.color = element.dataset.idle
-	}
-
-	cursor.x = element.offsetLeft + element.offsetWidth / 2
-    cursor.y = element.offsetTop + element.offsetHeight / 2
+	activeElement = document.querySelector('.active')
+	
+	cursor.x = activeElement.offsetLeft + activeElement.offsetWidth / 2
+    cursor.y = activeElement.offsetTop + activeElement.offsetHeight / 2
 
 	cursor3d = screenToWorld(cursor.x, cursor.y)
-	radius = cursor3d.x - screenToWorld(cursor.x + radiusPx, cursor.y).x
+	radius = screenToWorld(cursor.x + radiusPx, cursor.y).x - cursor3d.x
 }
 
 function screenToWorld(x, y) {
@@ -108,24 +73,44 @@ function init() {
 	container.appendChild(renderer.domElement)
 	document.body.appendChild(container)
 
-	window.addEventListener('resize', onWindowResize, false)
+	window.addEventListener('resize', onWindowResize)
+	window.addEventListener('load', function() {
+		repositionCursor()
+		windowLoaded = true
+	})
+	document.addEventListener('ActiveLinksMarked', repositionCursor)
 }
 
 function onWindowResize() {
 	camera.aspect = window.innerWidth / window.innerHeight
 	camera.updateProjectionMatrix()
 	renderer.setSize(window.innerWidth, window.innerHeight)
+	repositionCursor()
 }
 
 function animate() {
 	requestAnimationFrame(animate)
-	repositionCursor()
 
+	if(windowLoaded)
+		spawnParticles()
+
+	renderer.render(scene, camera)
+}
+
+function spawnParticles() {
 	let delta = clock.getDelta() * spawnerOptions.timeScale
 	tick += delta
 
 	spawnPosition.lerp(cursor3d, delta * 8)
-	//spawnPosition = cursor3d
+
+	if(activeElement !== oldActiveElement) {
+		spawnerOptions.spawnRate = 20000
+		options.color = activeElement.dataset.explode
+		oldActiveElement = activeElement
+	} else {
+		spawnerOptions.spawnRate = 500
+		options.color = activeElement.dataset.idle
+	}
 
 	if(tick < 0)
 		tick = 0
@@ -133,19 +118,14 @@ function animate() {
 	if(delta > 0) {
 		for(let x = 0; x < spawnerOptions.spawnRate * delta; x++) {
 			for(let degree = 0; degree < 360; degree++) {
-				options.position = spawnPosition.clone()
-				options.position.x += Math.cos(degree) * radius
-				options.position.y += Math.sin(degree) * radius
-				// options.velocity.x = Math.cos(degree)
-				// options.velocity.y = Math.sin(degree)
+				options.position.x = spawnPosition.x + Math.cos(degree) * radius
+				options.position.y = spawnPosition.y + Math.sin(degree) * radius
 				particleSystem.spawnParticle(options)
 			}
 		}
 	}
 
 	particleSystem.update(tick)
-
-	renderer.render(scene, camera)
 }
 
 init()
