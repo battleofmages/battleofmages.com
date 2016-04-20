@@ -3,12 +3,13 @@ html(lang='en')
 	head
 		title= app.config.title
 	
-	body.appear
+	body.appear-blur
 		video#background-video(autoplay, loop, poster='https://akamai-webcdn.blackdesertonline.com/web/static/images/events/mediah_update/landing_bg_clip_dark_thumb.jpg')
 			source(src='https://akamai-webcdn.blackdesertonline.com/web/static/video/mediah/mediah_bg_video.mp4', type='video/mp4')
 		
+		h1#title= app.config.title
+		
 		#header-container
-			h1= app.config.title
 			#navigation-container
 				nav#navigation
 					each item, name in menu

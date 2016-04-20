@@ -1,9 +1,18 @@
 .appear
-	transform translateZ(0)
-	animation-name appear
-	animation-duration 1s
+	animation appear 1s forwards
 
 @keyframes appear
+	from
+		opacity 0
+		transform translateY(120px)
+	to
+		opacity 1
+		transform translateY(0)
+
+.appear-blur
+	animation appear-blur 1s
+
+@keyframes appear-blur
 	from
 		filter opacity(0) saturate(0) blur(20px)
 	to

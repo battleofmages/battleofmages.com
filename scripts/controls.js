@@ -1,9 +1,19 @@
 function navigateLeft() {
+	let sibling = activeElement.previousSibling
 
+	if(!sibling)
+		sibling = activeElement.parentNode.lastChild
+
+	sibling.click()
 }
 
 function navigateRight() {
+	let sibling = activeElement.nextSibling
 
+	if(!sibling)
+		sibling = activeElement.parentNode.firstChild
+
+	sibling.click()
 }
 
 document.onkeydown = function(evt) {
